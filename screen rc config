@@ -1,0 +1,16 @@
+#vim .screenrc
+
+altscreen           on                  # Allow editors etc. to restore display on exit
+autodetach          on                  # Autodetach session on hangup instead of terminating screen completely
+defscrollback       20000               # Use a 20000-line scrollback buffer
+nonblock            on                  # Don't block command output if the terminal stops responding
+shell               bash                # Default shell: bash
+startup_message     off                 # Turn off the splash screen
+term                screen-256color     # Use 256color
+vbell               off                 # No screen flash
+
+#backtick 1 5 5 uptime
+#hardstatus alwayslastline "%1`"
+caption always "%{= kr}[ %{g}%H %{kw}| %{y}%l%{r} ]%=%{r}[ %{kc}%D, %Y/%m/%d %{kB}%c:%s%{r} ]"
+hardstatus alwayslastline "%{= kw}%-w%{G}%f %{W}%t %{w}%+w"
+#

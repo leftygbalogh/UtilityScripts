@@ -1,0 +1,8 @@
+#vim .ssh/config
+
+Host *
+  ServerAliveInterval 600
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+  LogLevel ERROR
+
