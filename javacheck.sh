@@ -12,7 +12,7 @@ fi
 
 if [[ "$_java" ]]; then
     version=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
-    echo "Java version is $version"
+    echo "Your current Java version is $version"
     if [[ "$version" < "1.8" ]]; then
         echo Java version does not meet the requirements.
     else
