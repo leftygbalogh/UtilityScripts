@@ -2,6 +2,7 @@
 # Detects which OS and if it is Linux then it will detect which Linux
 # Distribution.
 # from http://linuxmafia.com/faq/Admin/release-files.html
+#
 
 
 OS=`uname -s`
