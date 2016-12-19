@@ -17,8 +17,8 @@ if [[ "$_java" ]]; then
     echo version "$version"
 fi
 
-    if [[ "$version" > "1.5" ]]; then
-        echo version is more than 1.5
+    if [[ "$version" > "1.7" ]]; then
+        echo We are good to go.
     else         
-        echo version is less than 1.5
+        echo "Java will now be installed"
     fi
