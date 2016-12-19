@@ -1,17 +1,11 @@
 #!/bin/sh
-
-echo -n "Enter the username: "
+echo -n "Enter the Solr username: "
 read uname
 
-echo -n "Enter the password: "
+echo -n "Enter the Solr user password: "
 read -s passwd
 
 adduser "$uname"
-echo "$password" | passwd "$uname" --stdin
+echo $uname:$passwd | sudo chpasswd
 
-# add this in there somehow: 
-# sudo adduser existing_user sudo
-# gpasswd wheel -a username
-
-#Debian
-#echo $uname:$passwd | chpasswd
+gpasswd wheel -a $uname
