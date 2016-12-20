@@ -1,7 +1,8 @@
 #!/bin/sh
 # Download Solr and check if file has indeed been downloaded to /opt/
 DIR=/opt/
-URL=http://archive.apache.org/dist/lucene/solr/6.3.0/solr-6.3.0.tgz
+VERSION="6.3.0"
+URL=http://archive.apache.org/dist/lucene/solr/$VERSION/solr-$VERSION.tgz
 
 cd $DIR
 echo ""
@@ -25,3 +26,30 @@ else
         echo "since no other world could be as bad as this one is."
         echo ""
 fi
+
+tar zxf solr-$VERSION.tgz
+	echo ""
+    echo "Removing bubblewrap from Solr"
+    echo "=========================================="
+    echo ""
+cp /opt/solr-$VERSION/bin/install_solr_service.sh .
+rm -rf solr-$VERSION
+	echo ""
+	echo "Ready for Solr installer"
+    echo "=========================================="
+    echo ""
+
+echo "Lef"
+    echo -n "Enter the Solr username: "
+read uname
+
+echo -n "Enter the Solr user password: "
+read -s passwd
+
+adduser "$uname"
+echo $uname:$passwd | sudo chpasswd
+
+gpasswd wheel -a $uname > /dev/null
+    
+    echo "=========================================="
+    echo ""

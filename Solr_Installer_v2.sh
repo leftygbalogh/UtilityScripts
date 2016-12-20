@@ -153,28 +153,38 @@ rm -rf solr-$VERSION
     echo "=========================================="
     echo ""
 
+#echo -n "Enter the Solr username: "
+#read uname
+
+#echo -n "Enter the Solr user password: "
+#read -s password
+
+#adduser "$uname"
+#echo $uname:$pw | sudo chpasswd
+
+#gpasswd wheel -a $uname > /dev/null
+adduser solr
+passwd -d solr
+gpasswd wheel -a solr
+
+
+
+
+    echo "Created Solr user"
+    echo "=========================================="
+    echo ""
 
 # Run Solr installer
-./install_solr_service.sh solr-6.3.0.tgz
 
-
-#Create Solr user so Solr can be run as a service
-echo -n "Enter the Solr username: "
-read uname
-
-echo -n "Enter the Solr user password: "
-read -s password
-
-adduser "$uname"
-echo $uname:$password | sudo chpasswd
-
-gpasswd wheel -a $uname > /dev/null
+#sudo ./install_solr_service.sh solr-6.3.0.tgz
+su - solr -c "sudo /opt/install_solr_service.sh /opt/solr-6.3.0.tgz"
 
 echo ""
     echo "=========================================="
     echo ""
 
-
-
+echo "check config add"
+chkconfig --add solr
+chkconfig | grep solr
 
 
