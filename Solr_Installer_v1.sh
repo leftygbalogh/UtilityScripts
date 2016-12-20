@@ -99,6 +99,15 @@ fi
         yes | yum install java-1.8.0-openjdk.x86_64
     fi
 
+#Download Solr tarball
+DIR=/opt/
+URL=http://archive.apache.org/dist/lucene/solr/6.3.0/solr-6.3.0.tgz
+
+cd $DIR
+curl -O $URL -s --retry 5 -w http_code
+
+
+
 #Create Solr user so Solr can be run as a service
 echo -n "Enter the Solr username: "
 read uname
