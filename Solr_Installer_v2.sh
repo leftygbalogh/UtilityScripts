@@ -1,10 +1,11 @@
 #!/bin/sh
 
+#Solr Installer for RedHat
+
 # Detects which OS and if it is Linux then it will detect which Linux
 # Distribution.
-# from http://linuxmafia.com/faq/Admin/release-files.html
-
 #Check if OS is RedHAt as script only runs on RedHat
+
 OS=`uname -s`
 REV=`uname -r`
 MACH=`uname -m`
