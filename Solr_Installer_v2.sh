@@ -178,7 +178,11 @@ gpasswd wheel -a solr
 # Run Solr installer
 
 #sudo ./install_solr_service.sh solr-6.3.0.tgz
-su - solr -c "sudo /opt/install_solr_service.sh /opt/solr-6.3.0.tgz"
+echo funny stuff here
+script -c "su - solr -c sudo /opt/install_solr_service.sh /opt/solr-6.3.0.tgz"
+
+echo funny stuff over
+#su - solr -c "sudo /opt/install_solr_service.sh /opt/solr-6.3.0.tgz"
 
 echo ""
     echo "=========================================="
