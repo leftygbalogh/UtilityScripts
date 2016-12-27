@@ -178,18 +178,32 @@ gpasswd wheel -a solr
 # Run Solr installer
 
 #sudo ./install_solr_service.sh solr-6.3.0.tgz
-echo funny stuff here
+
 script -c "su - solr -c sudo /opt/install_solr_service.sh /opt/solr-6.3.0.tgz"
 
-echo funny stuff over
 #su - solr -c "sudo /opt/install_solr_service.sh /opt/solr-6.3.0.tgz"
 
-echo ""
+echo "Installed Solr successfully"
     echo "=========================================="
     echo ""
 
-echo "check config add"
+echo "Making Solr start automatically after reboot"
 chkconfig --add solr
 chkconfig | grep solr
 
+echo "Changing /var/solr owner to solr user"
+sudo chown -R solr:solr /var/solr/
 
+echo "Let's run a few tests"
+echo "Creating a new test core"
+sudo su - solr -c "/opt/solr/bin/solr create -c Kilgore_was_here_Test_Core -n data_driven_schema_configs"
+
+echo "Restarting the Solr service"
+
+sudo service solr restart
+
+sudo service solr status
+
+echo "Head over to your browser and open something like: "
+echo "http://<solr_server>:8983/solr/#/"
+echo "Check if the Admin is up and you can see the core"
