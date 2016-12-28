@@ -140,6 +140,7 @@ else
         echo "It’s sure to be a better one, "
         echo "since no other world could be as bad as this one is."
         echo ""
+        exit 1
 fi
 
 tar zxf solr-$VERSION.tgz
@@ -175,13 +176,15 @@ gpasswd wheel -a solr
     echo "=========================================="
     echo ""
 
+#Get rid of tty requirement
+sed -i.bak -e 's/Defaults    requiretty.*/#Defaults    requiretty/g' /etc/sudoers
+
+#Install lsof - Solr will need it
+yum -y install lsof
+
 # Run Solr installer
 
-#sudo ./install_solr_service.sh solr-6.3.0.tgz
-
-script -c "su - solr -c sudo /opt/install_solr_service.sh /opt/solr-6.3.0.tgz"
-
-#su - solr -c "sudo /opt/install_solr_service.sh /opt/solr-6.3.0.tgz"
+su - solr -c "sudo /opt/install_solr_service.sh /opt/solr-6.3.0.tgz"
 
 echo "Installed Solr successfully"
     echo "=========================================="
