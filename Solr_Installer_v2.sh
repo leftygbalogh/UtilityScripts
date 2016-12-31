@@ -27,7 +27,7 @@ if [ "${OS}" = "Darwin" ]; then
 
 elif [ "${OS}" = "SunOS" ] ; then
     OS=Solaris
-    ARCH=`uname -p` 
+    ARCH=`uname -p`
     OSSTR="${OS} ${REV}(${ARCH} `uname -v`)"
 
 elif [ "${OS}" = "AIX" ] ; then
@@ -51,7 +51,7 @@ elif [ "${OS}" = "Linux" ] ; then
     elif [ -f /etc/UnitedLinux-release ] ; then
         DIST="${DIST}[`cat /etc/UnitedLinux-release | tr "\n" ' ' | sed s/VERSION.*//`]"
     fi
-    
+
     OSSTR="${OS} ${DIST} ${REV}(${PSUEDONAME} ${KERNEL} ${MACH})"
 
 fi
@@ -75,10 +75,10 @@ if [[ ! `whoami` = "root" ]]; then
     echo "=========================================="
     echo ""
     exit 1
-else 
+else
     echo ""
     echo "You are an administrator. "
-    echo "The application will be installed as root."
+    echo "We're all good to go."
     echo "=========================================="
     echo ""
 fi
@@ -116,8 +116,8 @@ fi
 
 # Download Solr and check if file has indeed been downloaded to /opt/
 DIR=/opt/
-VERSION="6.3.0"
-URL=http://archive.apache.org/dist/lucene/solr/$VERSION/solr-$VERSION.tgz
+SOLRVERSION="6.3.0"
+URL=http://archive.apache.org/dist/lucene/solr/$SOLRVERSION/solr-$VERSION.tgz
 
 cd $DIR
 echo ""
@@ -143,34 +143,22 @@ else
         exit 1
 fi
 
-tar zxf solr-$VERSION.tgz
+tar zxf solr-$SOLRVERSION.tgz
     echo ""
     echo "Removing bubblewrap from Solr"
     echo "=========================================="
     echo ""
-cp /opt/solr-$VERSION/bin/install_solr_service.sh .
-rm -rf solr-$VERSION
+cp /opt/solr-$SOLRVERSION/bin/install_solr_service.sh .
+rm -rf solr-$SOLRVERSION
     echo ""
     echo "Ready for Solr installer"
     echo "=========================================="
     echo ""
 
-#echo -n "Enter the Solr username: "
-#read uname
-
-#echo -n "Enter the Solr user password: "
-#read -s password
-
-#adduser "$uname"
-#echo $uname:$pw | sudo chpasswd
-
-#gpasswd wheel -a $uname > /dev/null
+#Create Solr user and add to sudoers and remove password
 adduser solr
 passwd -d solr
 gpasswd wheel -a solr
-
-
-
 
     echo "Created Solr user"
     echo "=========================================="
