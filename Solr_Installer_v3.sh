@@ -119,15 +119,15 @@ fi
 
 # Download Solr and check if file has indeed been downloaded to /opt/
 DIR=/opt/
-VERSION="6.3.0"
-URL=http://archive.apache.org/dist/lucene/solr/$VERSION/solr-$VERSION.tgz
+SOLRVERSION="6.3.0"
+URL=http://archive.apache.org/dist/lucene/solr/$SOLRVERSION/solr-$SOLRVERSION.tgz
 
 cd $DIR
 echo ""
 echo "Downloading Solr from the Apache Archives" >> /tmp/Solr_Install.log 2>&1
 curl -O $URL --retry 5 >> /tmp/Solr_Install.log 2>&1
 
-file="/opt/solr-6.3.0.tgz"
+file="/opt/solr-$SOLRVERSION.tgz"
 if [ -f "$file" ]
 then
         echo "" >> /tmp/Solr_Install.log 2>&1
@@ -150,10 +150,10 @@ fi
     echo "Fidgeting with bubblewrap on Solr" >> /tmp/Solr_Install.log 2>&1
     echo "==========================================" >> /tmp/Solr_Install.log 2>&1
     echo "" >> /tmp/Solr_Install.log 2>&1
-    tar zxf solr-$VERSION.tgz >> /tmp/Solr_Install.log 2>&1
+    tar zxf solr-$SOLRVERSION.tgz >> /tmp/Solr_Install.log 2>&1
 
-cp /opt/solr-$VERSION/bin/install_solr_service.sh .
-rm -rf solr-$VERSION
+cp /opt/solr-$SOLRVERSION/bin/install_solr_service.sh .
+rm -rf solr-$SOLRVERSION
     echo "" >> /tmp/Solr_Install.log 2>&1
     echo "Ready for Solr installer" >> /tmp/Solr_Install.log 2>&1
     echo "==========================================" >> /tmp/Solr_Install.log 2>&1
