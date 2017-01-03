@@ -1,0 +1,317 @@
+#!/bin/sh
+
+#Solr Installer for RedHat
+
+# Detects which OS and if it is Linux then it will detect which Linux
+# Distribution.
+#Check if OS is RedHAt as script only runs on RedHat
+{
+OS=`uname -s`
+REV=`uname -r`
+MACH=`uname -m`
+
+echo "Welcome to the one and only Kilgore Solr Installer."
+
+######################333
+
+
+kilgoreFlag=off
+SOLRVERSION="6.3.0"
+while [ $# -gt 0 ]
+
+do
+
+    case "$1" in
+        -k | --kilgore)
+        kilgoreFlag=on
+        echo "The list of Novels written by Kilgore Trout, "
+        echo "the greatest science fiction writer of all times."
+        echo ""
+        echo " - Barring-gaffner of Bagnialto or This Year's Masterpiece (novel mentioned in Breakfast of Champions)"
+        echo " - The Big Board (novel mentioned in Slaughterhouse-Five)"
+        echo " - The Era of Hopeful Monsters (novel mentioned in Galápagos)"
+        echo " - First District Court of Thankyou (novel mentioned in Jailbird and God Bless You, Mr. Rosewater)"
+        echo " - The Gospel from Outer Space (novel mentioned in Slaughterhouse-Five)"
+        echo " - The Gutless Wonder (novel mentioned in Slaughterhouse-Five)"
+        echo " - How You Doin'? (novel mentioned in Breakfast of Champions)"
+        echo " - Maniacs in the Fourth Dimension (novel mentioned in Slaughterhouse-Five)"
+        echo " - The Money Tree (novel mentioned in Slaughterhouse-Five)"
+        echo " - Now It Can Be Told (novel mentioned in Breakfast of Champions)"
+        echo " - Oh Say Can You Smell? (novel mentioned in God Bless You, Mr. Rosewater)"
+        echo " - The Pan-Galactic Memory Bank (novel mentioned in Breakfast of Champions)"
+        echo " - The Pan-Galactic Straw Boss a.k.a. Mouth Crazy (novel mentioned in Breakfast of Champions)"
+        echo " - The Pan-Galactic Three-Day Pass (novel mentioned in God Bless You, Mr. Rosewater)"
+        echo " - Plague on Wheels (novel mentioned in Breakfast of Champions)"
+        echo " - The Smart Bunny (novel mentioned in Breakfast of Champions)"
+        echo " - The Son of Jimmy Valentine (novel mentioned in Breakfast of Champions)"
+        echo " - 2BR02B (novel mentioned in God Bless You, Mr. Rosewater)"
+        echo " - Venus on the Half-Shell (novel first mentioned in God Bless You, Mr. Rosewater)"
+        echo ""
+        shift
+        ;;
+
+        -v | --version)
+        shift
+        if [[ $# -gt 0 ]]; then
+    	     SOLRVERSION=$1
+    	      echo "We will be using Solr $SOLRVERSION for this installation."
+    	       shift
+        else
+      	   echo "Most things in this world don´t work, aspirin do."
+      	   echo "Capt'n, we're missing a Solr version variable after -v"
+        fi
+        ;;
+
+	      -h | --help | *)
+        echo ""
+        echo -e "\033[1mNAME\033[0m"
+        echo "		Kilgore"
+ 		    echo ""
+        echo -e "\033[1mSYNOPSIS\033[0m"
+        echo "		Kilgore [OPTION]... [OPTION] [VERSION]..."
+        echo ""
+        echo -e "\033[1mDESCRIPTION\033[0m"
+        echo "		Kilgore installs Solr from scratch on a RedHat server."
+        echo "		By default, unless otherwise specified, it installs Solr version $SOLRVERSION."
+        echo "		Ideally, you would be using clean RedHat install, version 7.x."
+        echo "		Stores the complate install log under /tmp/Solr_Install.log"
+        echo "		This script has only been tested with Solr 6.x"
+        echo "		"
+        echo -e "		\033[1m-h | --help\033[0m"
+        echo "				Print out all options"
+        echo "		"
+        echo -e "		\033[1m-k | --kilgore\033[0m"
+        echo "				Adds a Kilgore Trout flavour to the installation logfile "
+        echo "				under /tmp/Solr_Install.log."
+
+        echo "		"
+        echo -e "		\033[1m-v | --version [SolrVersion for example 6.1.0]\033[0m"
+        echo "				The exact syntax is -v 6.1.0 where the version number is"
+        echo "				the three digit number of the various Solr versions in the "
+        echo "				Apache archive."
+        echo "				This can be found at "
+        echo "				http://archive.apache.org/dist/lucene/solr/"
+        echo "		"
+
+        echo -e "\033[1mExit status\033[0m"
+        echo "		0		if OK"
+ 		    echo "		1		if version is missing"
+ 		    echo ""
+
+        echo -e "\033[1mAUTHOR\033[0m"
+        echo "		Lefty "
+        echo "		https://hu.linkedin.com/in/leftygbalogh"
+        echo "		https://github.com/leftygbalogh"
+        echo "		http://stackoverflow.com/users/5996315/lefty-g-balogh"
+ 		    echo ""
+
+        echo -e "\033[1mCOPYRIGHT\033[0m"
+        echo "		Copyright © 2016 License GPLv3+: GNU"
+        echo "		GPL version 3 or later <http://gnu.org/licenses/gpl.html>."
+        echo "		This  is  free software: you are free to change and redistribute it."
+        echo "		There is NO WARRANTY, to the extent permitted by law."
+      	echo ""
+        exit 1
+        ;;
+
+    esac
+done
+
+
+######################333
+
+
+GetVersionFromFile()
+{
+    VERSION=`cat $1 | tr "\n" ' ' | sed s/.*VERSION.*=\ // `
+}
+
+if [ "${OS}" = "Darwin" ]; then
+    OIFS="$IFS"
+    IFS=$'\n'
+    set `sw_vers` > /dev/null
+    DIST=`echo $1 | tr "\n" ' ' | sed 's/ProductName:[ ]*//'`
+    VERSION=`echo $2 | tr "\n" ' ' | sed 's/ProductVersion:[ ]*//'`
+    BUILD=`echo $3 | tr "\n" ' ' | sed 's/BuildVersion:[ ]*//'`
+    OSSTR="${OS} ${DIST} ${REV}(SORRY_NO_PSEUDONAME ${BUILD} ${MACH})"
+    IFS="$OIFS"
+
+elif [ "${OS}" = "SunOS" ] ; then
+    OS=Solaris
+    ARCH=`uname -p`
+    OSSTR="${OS} ${REV}(${ARCH} `uname -v`)"
+
+elif [ "${OS}" = "AIX" ] ; then
+    OSSTR="${OS} `oslevel` (`oslevel -r`)"
+elif [ "${OS}" = "Linux" ] ; then
+    KERNEL=`uname -r`
+    if [ -f /etc/redhat-release ] ; then
+        DIST='RedHat'
+        PSUEDONAME=`cat /etc/redhat-release | sed s/.*\(// | sed s/\)//`
+        REV=`cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*//`
+    elif [ -f /etc/SuSE-release ] ; then
+        DIST=`cat /etc/SuSE-release | tr "\n" ' '| sed s/VERSION.*//`
+        REV=`cat /etc/SuSE-release | tr "\n" ' ' | sed s/.*=\ //`
+    elif [ -f /etc/mandrake-release ] ; then
+        DIST='Mandrake'
+        PSUEDONAME=`cat /etc/mandrake-release | sed s/.*\(// | sed s/\)//`
+        REV=`cat /etc/mandrake-release | sed s/.*release\ // | sed s/\ .*//`
+    elif [ -f /etc/debian_version ] ; then
+        DIST="Debian `cat /etc/debian_version`"
+        REV=""
+    elif [ -f /etc/UnitedLinux-release ] ; then
+        DIST="${DIST}[`cat /etc/UnitedLinux-release | tr "\n" ' ' | sed s/VERSION.*//`]"
+    fi
+
+    OSSTR="${OS} ${DIST} ${REV}(${PSUEDONAME} ${KERNEL} ${MACH})"
+
+fi
+
+echo ${OSSTR}
+
+if [ ! ${DIST} = 'RedHat' ]; then
+    echo ""
+    echo "Sorry this script only runs on RedHat."
+    echo "=========================================="
+    echo ""
+    exit -1
+fi
+
+
+# Check if I am root user - comes handy for the install
+if [[ ! `whoami` = "root" ]]  ; then
+    echo ""
+    echo "You must have administrative privileges to run this script."
+    echo "Log in as root or use sudo and try again."
+    echo "=========================================="
+    echo ""
+    exit 1
+else
+    echo ""
+    echo "You are an administrator. "
+    echo "The application will be installed as root."
+    echo "=========================================="
+    echo ""
+fi
+
+# Chech if java is already installed and if it is 1.8 or higher - if not, install Java 1.8
+boolInstallJava=0
+
+if type -p java; then
+    echo Found Java.
+    _java=java
+elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]];  then
+    echo "Found Java."
+    _java="$JAVA_HOME/bin/java"
+else
+    echo ""
+    echo "No Java found."
+    boolInstallJava=1
+fi
+
+
+if [[ "$_java" ]]; then
+    version=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
+    echo Version "$version"
+fi
+
+    if [[ "$version" > "1.7" ]] && [[ $boolInstallJava -ne 1 ]]; then
+        echo "We are good to go."
+    else
+        echo ""
+        echo "Java will now be installed"
+        yes | yum install java-1.8.0-openjdk.x86_64
+    fi
+
+# Download Solr and check if file has indeed been downloaded to /opt/
+DIR=/opt/
+SOLRVERSION="6.3.0"
+URL=http://archive.apache.org/dist/lucene/solr/$SOLRVERSION/solr-$SOLRVERSION.tgz
+
+cd $DIR
+echo ""
+echo "Downloading Solr from the Apache Archives"
+curl -O $URL --retry 5
+
+file="/opt/solr-$SOLRVERSION.tgz"
+if [ -f "$file" ]
+then
+        echo ""
+        echo "Solr successfully downloaded."
+        echo "=========================================="
+        echo ""
+else
+        echo "Solr could not be downloaded. Weird, init?!"
+        echo "Exitin sadly, quoth Mandarax"
+        echo ""
+        echo "So long, old pal. "
+        echo "You’re going to a different world now."
+        echo "It’s sure to be a better one, "
+        echo "since no other world could be as bad as this one is."
+        echo ""
+        exit 1
+fi
+
+    echo ""
+    echo "Fidgeting with bubblewrap on Solr"
+    echo "=========================================="
+    echo ""
+    tar zxf solr-$SOLRVERSION.tgz
+
+cp /opt/solr-$SOLRVERSION/bin/install_solr_service.sh .
+rm -rf solr-$SOLRVERSION
+    echo ""
+    echo "Ready for Solr installer"
+    echo "=========================================="
+    echo ""
+
+adduser solr
+passwd -d solr
+gpasswd wheel -a solr
+
+
+
+
+    echo "Created Solr user"
+    echo "=========================================="
+    echo ""
+
+#Get rid of tty requirement
+sed -i.bak -e 's/Defaults    requiretty.*/#Defaults    requiretty/g' /etc/sudoers
+
+#Install lsof - Solr will need it
+yum -y install lsof
+
+# Run Solr installer
+
+su - solr -c "sudo /opt/install_solr_service.sh /opt/solr-6.3.0.tgz"
+
+echo "Installed Solr successfully"
+    echo "=========================================="
+    echo ""
+
+echo "Making Solr start automatically after reboot"
+chkconfig --add solr
+chkconfig | grep solr
+
+echo "Changing /var/solr owner to solr user"
+sudo chown -R solr:solr /var/solr/
+
+echo "Let's run a few tests"
+echo "Creating a new test core"
+sudo su - solr -c "/opt/solr/bin/solr create -c Kilgore_was_here_Test_Core -n data_driven_schema_configs"
+
+echo "Restarting the Solr service"
+
+sudo service solr restart
+
+sudo service solr status
+
+echo "Head over to your browser and open something like: "
+echo "http://<solr_server>:8983/solr/#/"
+echo "Check if the Admin is up and you can see the core"
+
+
+echo ""
+echo "The installation log you are seeing is currenty available at /tmp/Solr_Install.log"
+} 2>&1 | tee -a /tmp/Solr_Install.log
