@@ -1,0 +1,17 @@
+
+echo "╔════════════════════════════════╧════════════════════════════════╗"
+echo "╚════════════════════════════════╤════════════════════════════════╝"
+
+
+
+╔══╤══╗
+║  │  ║
+╟──┼──╢
+║  │  ║
+╚══╧══╝
+
+13  curl -L -o kilgore.sh https://raw.githubusercontent.com/leftygbalogh/UtilityScripts/master/Solr_Installer_v5
+14  ls
+15  chmod +x kilgore.sh
+16  ./kilgore.sh
+17  sudo ./kilgore.sh
