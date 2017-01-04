@@ -17,7 +17,7 @@ SOLRVERSION="6.3.0"
 #Can be used further on to add more Kilgore Trout references if necessary
 kilgoreFlag=off
 echo "╔═════════════════════════════════════════════════════════════════╗"
-echo "         Welcome to the one and only Kilgore Solr Installer."
+echo "║        Welcome to the one and only Kilgore Solr Installer.      ║"
 echo "╚════════════════════════════════╤════════════════════════════════╝"
 
 # Detects which OS and if it is Linux then it will detect which Linux
@@ -35,11 +35,12 @@ do
         -k | --kilgore)
         kilgoreFlag=on
         echo "╔════════════════════════════════╧════════════════════════════════╗"
-        echo "      The list of Novels written by Kilgore Trout, "
-        echo "      the greatest science fiction writer of all times."
+        echo "║     The list of Novels written by Kilgore Trout,                ║"
+        echo "║     the greatest science fiction writer of all times.           ║"
         echo "╚════════════════════════════════╤════════════════════════════════╝"
+sleep 1
         echo "╔════════════════════════════════╧════════════════════════════════╗"
-        echo "      "
+        echo "║                                                                 ║"
         echo "    - Barring-gaffner of Bagnialto or This Year's Masterpiece"
         echo "          (novel mentioned in Breakfast of Champions)"
         echo "    - The Big Board (novel mentioned in Slaughterhouse-Five)"
@@ -71,7 +72,7 @@ do
         echo "    - Venus on the Half-Shell "
         echo "          (novel first mentioned in God Bless You, Mr. Rosewater)"
         echo "╚════════════════════════════════╤════════════════════════════════╝"
-
+sleep 5
 
         shift
         ;;
