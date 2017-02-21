@@ -1,0 +1,41 @@
+#!/bin/sh
+inotifywait --quiet --recursive --monitor --event modify --format "%w%f" /tmp/target.cfg \
+| while read change; do
+    echo "We've been watching your activities for a while."
+    echo "You have made changes to a system file."
+    echo "These changes need to be added to the version control system."
+
+    echo "Enter your email address here:"
+    read email
+
+    echo "Enter your Ericsson signum or full name:"
+    read name
+
+    echo "What changes have you made?"
+    read message
+
+    echo $name "("$email")" "made the following changes:"
+    echo $message
+done
+
+
+
+while inotifywait --monitor -e close_write /tmp/target.cfg; do
+  echo "We've been watching your activities for a while."
+  echo "You have made changes to a system file."
+  echo "These changes need to be added to the version control system."
+
+  echo "Enter your email address here:"
+  read email
+
+  echo "Enter your Ericsson signum or full name:"
+  read name
+
+  echo "What changes have you made?"
+  read message
+
+  echo $name "("$email")" "made the following changes:"
+  echo $message
+
+
+done

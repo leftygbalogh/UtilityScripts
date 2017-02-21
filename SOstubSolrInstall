@@ -1,0 +1,33 @@
+Install script for Solr on RedHat
+
+As a proper Solr installation is less than obvious, I did a bit of digging around and only found a handful of long procedures like say the one on Digital Ocean for Ubuntu.
+
+I wrote up a similar one in the SO documentation for RedHat.
+
+But I have not found one that actually would automate the entire process from Java to core creation.
+
+Is there one I missed?
+==================
+
+I decided to turn the doc I wrote into a Solr installation script that covers the whole process from cover to cover including all the dependencies and a handful of checks and core creation.
+
+I have tested it on RHEL 7.x virtual instances on AWS, with Solr 6.1.0 and 6.3.0. Just run kilgore.sh with -h or --help for details. By default, it installs Solr 6.3.0.
+
+Feedback, suggestions and requests are very welcome. I opened a similar thread for an end-to-end Ubuntu installer, to see if there is enough interest for me to put some time into it.
+
+The script is also on github:
+https://github.com/SolrWorkbench/Kilgore_Installer/blob/master/kilgore.sh
+
+On a clean RedHat 7 install, all you need to do is:
+cd /tmp/
+curl -L -O -J https://raw.githubusercontent.com/SolrWorkbench/Kilgore_Installer/master/kilgore.sh
+chmod +x kilgore.sh
+sudo ./kilgore.sh -k -v 6.1.0
+
+======================
+End-to-end Installation Script for Solr on Ubuntu
+
+I did a bit of digging around and only found a handful of long procedures like say the one on Digital Ocean for Ubuntu, which actually is pretty good. But there is still an awful lot of things to keep in mind.
+I dug up the usual sources, but found no script that would actually automate the entire process from Java through install to core creation.
+
+I wrote one for RedHat and was wondering if there is one I missed? Or should I actually devote some time and write it myself?
