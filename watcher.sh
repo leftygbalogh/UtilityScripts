@@ -2,7 +2,7 @@
 
 echo "Git watch is being initiated at $gitWatchDate"
 
-inotifywait --format "%w%f" --event modify /tmp/ \
+inotifywait --format "%w%f" --event modify /tmp/ & \
 | while read FILE; do
     if [[ $FILE == "/tmp/target.cfg" ]]; then
         echo "Running script: $0"
@@ -10,6 +10,6 @@ inotifywait --format "%w%f" --event modify /tmp/ \
 
         export fileName=$FILE
         echo $fileName
-        /tmp/box.sh
+
     fi
 done
