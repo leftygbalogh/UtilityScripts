@@ -1,46 +1,57 @@
 #!/bin/sh
 
-$(which git) init /tmp/
+/usr/local/git/bin/git init /tmp/
 
 gitWatchDate=$(date)
 echo "Git watch is being initiated on $gitWatchDate"
 
-inotifywait --format "%w%f" --event modify /tmp/ \
-| while read FILE; do
-    if [[ $FILE == "/tmp/target.cfg" ]]; then
-        echo "Running script: $0"
-        echo "File modified: $FILE"
+#inotifywait --format "%w%f" --event modify /tmp/ \
+#| while read FILE; do
 
-        echo $sessionID " is the session ID"
+inotifywait --monitor --quiet --format "%w%f %f %w" --event modify /tmp \
+| while read OUTPUT; do
 
-        echo $FILE > /tmp/modifiedFileNameFile$sessionID
+    echo $OUTPUT
+    FILE=$(echo $OUTPUT | cut -d' ' -f1)
+        echo $FILE
+    bareFile=$(echo $OUTPUT | cut -d' ' -f2)
+        echo $bareFile
+    folder=$(echo $OUTPUT | cut -d' ' -f3)
+        echo $folder
 
-        export gitName=$(cat /tmp/nameSignumFile$sessionID)
-        echo $gitName
-
-        export gitEmail=$(cat /tmp/emailFile$sessionID)
-        echo $gitEmail
-
-        echo "Adding user to git"
-        $(which git) config --global user.email $gitEmail
-        $(which git) config --global user.email
-
-        $(which git) config --global user.name $gitName
-        $(which git) config --global user.name
-
-        echo "Staging and committing $FILE to git"
-        $(which git) add $FILE
-        $(which git) commit
-
-        echo "Removing user from git"
-        $(which git) config --global --unset user.email
-        $(which git) config --global --unset user.name
-
-        $(which git) config --global user.email
-        $(which git) config --global user.name
-
-        exit -7
-    fi
-    echo "Skipped file change"
-    exit -8
+#
+#    if [[ $FILE == "/tmp/target.cfg" ]]; then
+#        echo "Running script: $0"
+#        echo "File modified: $FILE"
+#
+#        echo $sessionID " is the session ID"
+#
+#        echo $FILE > /tmp/modifiedFileNameFile$sessionID
+#
+#        export gitName=$(cat /tmp/nameSignumFile$sessionID)
+#        echo $gitName
+#
+#        export gitEmail=$(cat /tmp/emailFile$sessionID)
+#        echo $gitEmail
+#
+#        echo "Adding user to git"
+#        /usr/local/git/bin/git config --global user.email $gitEmail
+#        /usr/local/git/bin/git config --global user.email
+#
+#        /usr/local/git/bin/git config --global user.name $gitName
+#        /usr/local/git/bin/git config --global user.name
+#
+#        echo "Staging and committing $bareFile to git"
+#        cd $folder
+#        /usr/local/git/bin/git add $bareFile
+#        /usr/local/git/bin/git commit $bareFile --message="$gitName ($gitEmail) modified $bareFile in $folder on $(date)"
+#
+#        echo "Removing user from git"
+#        /usr/local/git/bin/git config --global --unset user.email
+#        /usr/local/git/bin/git config --global --unset user.name
+#
+#        /usr/local/git/bin/git config --global user.email
+#        /usr/local/git/bin/git config --global user.name
+#
+#    fi
 done
