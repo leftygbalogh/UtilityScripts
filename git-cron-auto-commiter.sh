@@ -1,4 +1,6 @@
 #!/bin/bash
+#running cron as in */53 */7 * * * /usr/local/sbin/git-cron-autocommiter.sh >> /home/ebalgza/git-commit.log 2>&1
+
 
 PATH=$PATH:/usr/local/git/bin/
 
