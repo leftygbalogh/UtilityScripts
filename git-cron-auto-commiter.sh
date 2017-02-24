@@ -1,6 +1,9 @@
 #!/bin/bash
 
-#PATH=$PATH:/usr/local/git/bin/
+PATH=$PATH:/usr/local/git/bin/
+
+echo ${PATH}
+date
 
 gitFolder=/tmp
 username="Rodimus Prime"
