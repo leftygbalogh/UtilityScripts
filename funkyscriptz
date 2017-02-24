@@ -1,0 +1,9 @@
+#!/bin/sh
+
+#watch the files in the list and log events into logfile
+inotifywait --monitor --quiet --format "%w%f %f %w %e" --outfile /home/ebalgza/inotify.log --fromfile /home/ebalgza/inotifyfile.list &
+
+#stip out modified files from git status
+git status | grep "modified: " | cut -d':' -f2 | xargs | tr ' ' '\n'
+#space separated
+git status | grep "modified: " | cut -d':' -f2 | xargs
