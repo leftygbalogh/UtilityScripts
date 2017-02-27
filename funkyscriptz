@@ -7,3 +7,6 @@ inotifywait --monitor --quiet --format "%w%f %f %w %e" --outfile /home/ebalgza/i
 git status | grep "modified: " | cut -d':' -f2 | xargs | tr ' ' '\n'
 #space separated
 git status | grep "modified: " | cut -d':' -f2 | xargs
+
+#get the session number
+export sessionID=$(who am i | cut -d'/' -f2 | cut -d' ' -f1)
