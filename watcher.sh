@@ -8,7 +8,9 @@ echo "Git watch is being initiated on $gitWatchDate"
 #inotifywait --format "%w%f" --event modify /tmp/ \
 #| while read FILE; do
 
-inotifywait --monitor --quiet --format "%w%f %f %w" --event modify /tmp \
+#inotifywait --monitor --quiet --format "%w%f %f %w" --event modify /tmp \
+inotifywait --monitor --quiet --format "%w%f %f %w %e" --outfile /home/ebalgza/inotify.log --fromfile /home/ebalgza/inotifyfile.list \
+
 | while read OUTPUT; do
 
     echo $OUTPUT
@@ -18,6 +20,8 @@ inotifywait --monitor --quiet --format "%w%f %f %w" --event modify /tmp \
         echo $bareFile
     folder=$(echo $OUTPUT | cut -d' ' -f3)
         echo $folder
+    event=$(echo $OUTPUT | cut -d' ' -f4)
+        echo $event
 
 #
 #    if [[ $FILE == "/tmp/target.cfg" ]]; then
