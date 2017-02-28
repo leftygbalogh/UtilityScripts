@@ -10,3 +10,30 @@ git status | grep "modified: " | cut -d':' -f2 | xargs
 
 #get the session number
 export sessionID=$(who am i | cut -d'/' -f2 | cut -d' ' -f1)
+
+#create filename based on session ID
+nameFile="/var/lib/git-committer/nameSignumFile$sessionID"
+
+#list all currently active ssh sessions
+ date; last | grep "still"
+
+#Create a directory for session specific data
+mkdir /var/lib/git-committer
+
+#Create a directory for app logs
+mkdir /var/log/git-committer
+
+#Initialise log file
+touch "/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
+
+#Enable recursive calls on startup script
+chmod +x /etc/profile.d/credentials.sh
+
+#create a folder if it does not exist
+mkdir -p "/var/lib/git-committer/"
+
+#Create file if it does not exist
+[ -e "$nameFile" ] || touch "$nameFile"
+
+#auto install dialog utility
+yes | yum install dialog

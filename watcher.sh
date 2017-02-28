@@ -3,6 +3,10 @@
 /usr/local/git/bin/git init /tmp/
 
 gitWatchDate=$(date)
+opened="FALSE"
+modified="FALSE"
+closed="FALSE"
+
 echo "Git watch is being initiated on $gitWatchDate"
 
 #inotifywait --format "%w%f" --event modify /tmp/ \

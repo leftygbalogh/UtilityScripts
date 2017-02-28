@@ -1,0 +1,28 @@
+Lockout with a script that runs from /etc/profile.d
+
+I have found a very creative way to render a machine completely useless on my journey to bash wisdom. Practically, I ask for user credentials and if I get them, I issue an exit 0 that terminates my ssh connection, if I don't get them, I run the script again.
+
+What does not kill the script - any number of:
+CTRL+d
+CTRL+c
+
+Tried a few noninteractive shells and ways to get in: scp and rsync fail with timeout.
+
+Emergency recovery does not seem to cure it either.
+
+Any other way I could try and get in to modify or delete my script?
+
+The killer script - for the record looks like this:
+
+#!/bin/bash
+
+dialog --inputbox "Enter your name:\n" 8 40 2>/var/lib/bla/name;
+dialog --inputbox "Enter your email address:\n" 8 40 2>/var/lib/bla/email;
+
+if [ -s /var/lib/bla/name ] && [ -s /var/lib/bla/email ]; then
+    echo "Awesome."
+    exit 0
+
+else
+    /etc/profile.d/credentials.sh
+fi
