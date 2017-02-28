@@ -15,3 +15,8 @@ wget https://www.kernel.org/pub/software/scm/git/git-2.11.1.tar.gz
 tar xzf git-2.11.1.tar.gz
 cd git-2.11.1/
 make prefix=/usr/local/sbin all
+make prefix=/usr/local/sbin install
+
+echo "export PATH=$PATH:/usr/local/sbin/bin" >> /etc/bashrc
+source /etc/bashrc
+git --version
