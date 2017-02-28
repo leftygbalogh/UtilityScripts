@@ -8,8 +8,7 @@ dialog --inputbox "Enter your name or Ericsson ID:\n" 8 40 2>/tmp/nameSignumFile
 
 dialog --inputbox "Enter your email address:\n" 8 40 2>/tmp/emailFile$sessionID;
 
+clear
 echo ""
-echo "Awesome.  Carry on soldier."
+echo "Awesome. Carry on soldier."
 echo ""
-
-#/home/ebalgza/watcher.sh &
