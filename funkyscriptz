@@ -42,4 +42,4 @@ yes | yum install dialog
 rpm -e --nodeps "git"
 
 #find two processes and exclude the grep process
-ps -aux | grep [^]]watcher.sh\|[^]]inotify
+ps -aux | grep [^]]watcher.sh || ps -aux | grep [^]]inotify
