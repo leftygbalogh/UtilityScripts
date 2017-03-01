@@ -37,3 +37,6 @@ mkdir -p "/var/lib/git-committer/"
 
 #auto install dialog utility
 yes | yum install dialog
+
+#remove app without removing dependencies
+rpm -e --nodeps "git"
