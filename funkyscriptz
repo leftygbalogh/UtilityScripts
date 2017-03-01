@@ -40,3 +40,6 @@ yes | yum install dialog
 
 #remove app without removing dependencies
 rpm -e --nodeps "git"
+
+#find two processes and exclude the grep process
+ps -aux | grep [^]]watcher.sh\|[^]]inotify
