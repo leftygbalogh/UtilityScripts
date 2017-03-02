@@ -43,3 +43,19 @@ rpm -e --nodeps "git"
 
 #find two processes and exclude the grep process
 ps -aux | grep [^]]watcher.sh || ps -aux | grep [^]]inotify
+
+#send the output of multiple commands into a logfile
+{
+    echo "Current list of watched files is in: $filelist"
+    cat $filelist
+    last | grep "still" | sort
+} >> $logfile
+
+#kill main process and subprocess running in the background
+killall inotifywait || killall watcher.sh
+
+#Check multiple joint conditions A AND B
+if [ $opened == "TRUE" ] &&  [ $modified == "TRUE" ] && [ $closed == "TRUE"  ]; then
+        echo "$filename has been changed."
+        echo "Time to call the ghost busters"
+    fi
