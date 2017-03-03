@@ -4,6 +4,7 @@ gitWatchDate=$(date)
 opened="FALSE"
 modified="FALSE"
 closed="FALSE"
+fileListChanged="FALSE"
 logfile="/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
 filelist="/etc/opt/git-committer/filestowatch.list"
 
@@ -54,9 +55,44 @@ logfile="/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
         closed="TRUE"
     fi
 
+    if [ $filename == "/etc/opt/git-committer/filestowatch.list" ]; then
+        fileListChanged="TRUE"
+    fi
+
+
+#Watch the file that contains the list of files to watch
+# If it changes, the who script needs to be restarted
+# to reflect the changes.
+    if [ $opened == "TRUE" ] &&  [ $modified == "TRUE" ] && [ $closed == "TRUE"  ] && [ $fileListChanged == "TRUE" ]; then
+
+        echo -e "\033[1m$filename\033[0m - the list of files to watch has been changed."
+        #TODO
+        echo -e "\033[1mThe change needs to be commited.\033[0m"
+        #TODO
+        echo "Processes: watcher and inotify need to be stopped"
+        #TODO
+        echo "Watcher needs to be started."
+
+        #Reset flags so it is not recommitted
+        opened="FALSE"
+        modified="FALSE"
+        closed="FALSE"
+        fileListChanged="FALSE"
+
+    fi
+
     if [ $opened == "TRUE" ] &&  [ $modified == "TRUE" ] && [ $closed == "TRUE"  ]; then
         echo "$filename has been changed."
         echo "Time to call the ghost busters"
+        #TODO
+        echo "The change needs to be commited."
+
+        #Reset flags
+        opened="FALSE"
+        modified="FALSE"
+        closed="FALSE"
+
+
     fi
 
 } >> $logfile
