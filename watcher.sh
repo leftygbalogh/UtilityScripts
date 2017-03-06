@@ -63,7 +63,7 @@ logfile="/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
 #Watch the file that contains the list of files to watch
 # If it changes, the who script needs to be restarted
 # to reflect the changes.
-    if [ $opened == "TRUE" ] &&  [ $modified == "TRUE" ] && [ $closed == "TRUE"  ] && [ $fileListChanged == "TRUE" ]; then
+    if [ $opened == "TRUE" ] &&  [ $modified == "TRUE" ] && [ $closed == "TRUE"  ] && [ $fileListChanged == "TRUE" ] && [ $filename == "/etc/opt/git-committer/filestowatch.list" ]; then
 
         echo -e "\033[1m$filename\033[0m - the list of files to watch has been changed."
         #TODO
