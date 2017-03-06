@@ -65,3 +65,6 @@ echo -e "\033[1mNAME\033[0m"
 
 #send email from commandline
 cat /tmp/contentsfile | mail -s "Test message subject" -c CCaddress@ericsson.com -r sender@vmx-eea375 -a /tmp/attachment.txt TOaddress@ericsson.com
+
+#show attached device details such as drives and mounted devices
+blkid -o list
