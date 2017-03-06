@@ -59,3 +59,9 @@ if [ $opened == "TRUE" ] &&  [ $modified == "TRUE" ] && [ $closed == "TRUE"  ]; 
         echo "$filename has been changed."
         echo "Time to call the ghost busters"
     fi
+
+#echo in bold ad then set font back to regular
+echo -e "\033[1mNAME\033[0m"
+
+#send email from commandline
+cat /tmp/contentsfile | mail -s "Test message subject" -c CCaddress@ericsson.com -r sender@vmx-eea375 -a /tmp/attachment.txt TOaddress@ericsson.com
