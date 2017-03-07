@@ -7,6 +7,7 @@ closed="FALSE"
 fileListChanged="FALSE"
 logfile="/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
 filelist="/etc/opt/git-committer/filestowatch.list"
+watcherfile="/var/lib/git-committer/watcher.sh"
 
 #Create the very first log if necessary
 [ -e $logfile ] || touch $logfile
@@ -19,6 +20,7 @@ filelist="/etc/opt/git-committer/filestowatch.list"
     echo "list of files:"
     cat $filelist
     echo ""
+    echo $$ is the current PID.
     echo "Currently logged in users:"
     w -i
     last | grep "still" | sort
@@ -67,11 +69,15 @@ logfile="/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
 
         echo -e "\033[1m$filename\033[0m - the list of files to watch has been changed."
         #TODO
-        echo -e "\033[1mThe change needs to be commited.\033[0m"
+        echo -e "\033[1mThe change needs to be committed.\033[0m"
         #TODO
         echo "Processes: watcher and inotify need to be stopped"
         #TODO
         echo "Watcher needs to be started."
+        echo $$ is the old PID
+
+        $watcherfile && exit
+
 
         #Reset flags so it is not recommitted
         opened="FALSE"
