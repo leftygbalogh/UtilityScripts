@@ -68,3 +68,12 @@ cat /tmp/contentsfile | mail -s "Test message subject" -c CCaddress@ericsson.com
 
 #show attached device details such as drives and mounted devices
 blkid -o list
+
+#list processes with: groupID ID TTY_number
+ps -g -o  "%r %p %y %x %c"
+
+#get the process ID of a background process
+ps -g -o  "%p %r %y %x %c" | grep "inotifywait" | cut -d ' ' -f1
+
+#kill a process by ID based on its name
+kill $( ps -g -o  "%p %r %y %x %c" | grep "inotifywait" | cut -d ' ' -f1 )
