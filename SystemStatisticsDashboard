@@ -1,0 +1,23 @@
+ iostat
+ sadf
+ pidstat
+
+
+ Glances:
+ ## RHEL/CentOS 7 64-Bit ##
+# wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm
+# rpm -ivh epel-release-7-9.noarch.rpmyum install -y glances
+
+top
+vmstat
+w
+ps -e
+free
+sar
+lsof
+netstat
+
+# cat /proc/cpuinfo
+# cat /proc/meminfo
+# cat /proc/zoneinfo
+# cat /proc/mounts
