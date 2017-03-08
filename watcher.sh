@@ -8,6 +8,7 @@ fileListChanged="FALSE"
 logfile="/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
 filelist="/etc/opt/git-committer/filestowatch.list"
 watcherfile="/var/lib/git-committer/watcher.sh"
+restarter="/var/lib/git-committer/restarter.sh"
 
 #Create the very first log if necessary
 [ -e $logfile ] || touch $logfile
@@ -31,6 +32,8 @@ watcherfile="/var/lib/git-committer/watcher.sh"
 #all the above is executed only once per run
 
 inotifywait --monitor --quiet --format "%w%f %e" --fromfile $filelist | while read OUTPUT; do
+
+inotifyPID=$( ps -g -o  "%p %r %y %x %c" | grep "inotifywait" | cut -d ' ' -f1)
 
 #create log file if it does not exist for the day
 [ -e "/var/log/git-committer/file-change-events-$(date +%Y%m%d).log" ] || touch "/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
@@ -74,9 +77,8 @@ logfile="/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
         echo "Processes: watcher and inotify need to be stopped"
         #TODO
         echo "Watcher needs to be started."
-        echo $$ is the old PID
 
-        $watcherfile && exit
+        $restarter inotifyPID
 
 
         #Reset flags so it is not recommitted
