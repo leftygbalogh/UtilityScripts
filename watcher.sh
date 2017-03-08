@@ -35,6 +35,9 @@ inotifywait --monitor --quiet --format "%w%f %e" --fromfile $filelist | while re
 
 inotifyPID=$( ps -g -o  "%p %r %y %x %c" | grep "inotifywait" | cut -d ' ' -f1)
 
+echo "inotifyPID: " >> $logfile
+echo $inotifyPID >> $logfile
+
 #create log file if it does not exist for the day
 [ -e "/var/log/git-committer/file-change-events-$(date +%Y%m%d).log" ] || touch "/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
 
@@ -64,21 +67,33 @@ logfile="/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
         fileListChanged="TRUE"
     fi
 
+    echo "fileListChanged: $fileListChanged"
+    echo "filename: $filename"
+    echo "watcherfile: $watcherfile"
+    echo "====================================="
+} >> $logfile
 
 #Watch the file that contains the list of files to watch
 # If it changes, the who script needs to be restarted
 # to reflect the changes.
-    if [ $opened == "TRUE" ] &&  [ $modified == "TRUE" ] && [ $closed == "TRUE"  ] && [ $fileListChanged == "TRUE" ] && [ $filename == "/etc/opt/git-committer/filestowatch.list" ]; then
+    if [ $opened == "TRUE" ] &&  [ $modified == "TRUE" ] && [ $closed == "TRUE"  ] && [ $fileListChanged == "TRUE" ] && [ $filename == $filelist ]; then
 
-        echo -e "\033[1m$filename\033[0m - the list of files to watch has been changed."
-        #TODO
-        echo -e "\033[1mThe change needs to be committed.\033[0m"
-        #TODO
-        echo "Processes: watcher and inotify need to be stopped"
-        #TODO
-        echo "Watcher needs to be started."
+        {
+            echo -e "\033[1m$filename\033[0m - the list of files to watch has been changed."
+            #TODO
+            echo -e "\033[1mThe change needs to be committed.\033[0m"
+            #TODO
+            echo "Processes: watcher and inotify need to be stopped"
+            #TODO
+            echo "Watcher needs to be started."
 
-        $restarter inotifyPID
+            echo "inotifyPID: "
+            echo $inotifyPID
+            echo "This is handed over to the restarter"
+        } >> $logfile
+
+
+        $restarter
 
 
         #Reset flags so it is not recommitted
@@ -88,7 +103,7 @@ logfile="/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
         fileListChanged="FALSE"
 
     fi
-
+{
     if [ $opened == "TRUE" ] &&  [ $modified == "TRUE" ] && [ $closed == "TRUE"  ]; then
         echo "$filename has been changed."
         echo "Time to call the ghost busters"
