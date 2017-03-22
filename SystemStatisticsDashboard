@@ -21,3 +21,8 @@ netstat
 # cat /proc/meminfo
 # cat /proc/zoneinfo
 # cat /proc/mounts
+
+
+http://stackoverflow.com/questions/5464902/bash-script-to-show-updating-information-in-terminal
+
+http://stackoverflow.com/questions/8994108/how-to-left-justify-text-in-bash
