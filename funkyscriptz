@@ -77,3 +77,6 @@ ps -g -o  "%p %r %y %x %c" | grep "inotifywait" | cut -d ' ' -f1
 
 #kill a process by ID based on its name
 kill $( ps -g -o  "%p %r %y %x %c" | grep "inotifywait" | cut -d ' ' -f1 )
+
+#display and follow logs in green and red based on line contents
+tail -f /opt/ericsson/eea/log/corr_0.log | awk '  /blocking:false/ {print "\033[32m" $0 "\033[39m"}  /blocking:true/ {print "\033[31m" $0 "\033[39m"}'
