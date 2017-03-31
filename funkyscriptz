@@ -85,4 +85,4 @@ tail -f /opt/ericsson/eea/log/corr_0.log | awk '/blocking:false/ {print "\033[32
 less /opt/ericsson/eea/log/corr_0.log | awk '  /blocking:false/ {print "\033[32m" $0 "\033[39m"}  /blocking:true/ {print "\033[31m" $0 "\033[39m"} /Report eventNum/ {print "\033[36m" $0 "\033[39m"} /Receive summary:/ {print "\033[37m" $0 "\033[39m"} /Memory/ {print "\033[38m" $0 "\033[39m"}'
 
 #Set up sudo user with one line
-adduser foo; spawn passwd foo; expect "password:"; send "abc123"; expect "Retype new password:"; send "abc123"; interact; usermod -aG wheel foo;
+U=youzerneim; P="pswrd"; adduser $U; echo $P | passwd $U --stdin; usermod -aG wheel $U; su - $U
