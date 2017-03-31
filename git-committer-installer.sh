@@ -32,28 +32,34 @@ rm -f inotify-tools-3.14-8.el7.x86_64.rpm
 #===inotify utilities complete===
 
 # Create log and variable directories and files
-#Create a directory for session specific data
+
+##Create a directory for session specific data
+
 mkdir -p /var/lib/git-committer
 
-#Create a directory for app logs
+## Create watcher script and make it executable
+[ -e "/var/lib/git-committer/watcher.sh" ] || touch "/var/lib/git-committer/watcher.sh"
+chmod +x /var/lib/git-committer/watcher.sh
+
+##TODO add/paste actual script into it
+
+
+
+##Create a directory for app logs
 mkdir -p /var/log/git-committer
 
-#Initialise log file
+##Initialise log file
 [ -e "/var/log/git-committer/file-change-events-$(date +%Y%m%d).log" ] || touch "/var/log/git-committer/file-change-events-$(date +%Y%m%d).log"
 
 
-#Create file to contain list of files to watch and commit
+##Create file to contain list of files to watch and commit
 mkdir -p /etc/opt/git-committer
 [ -e "/etc/opt/git-committer/filestowatch.list" ] || touch "/etc/opt/git-committer/filestowatch.list"
 
-#TODO add/appent actual list to it
-# echo /tmp/target.cfg >> /etc/opt/git-committer/filestowatch.list
+##TODO add/appent actual list to it
+## echo /tmp/target.cfg >> /etc/opt/git-committer/filestowatch.list
 #===file and dirs done===
 
-# Create watcher script and make it executable
-#vi /var/lib/git-committer/watcher.sh
-#TODO add/paste actual script into it
 
-chmod +x /var/lib/git-committer/watcher.sh
 
 #start file and add @reboot cronjob
