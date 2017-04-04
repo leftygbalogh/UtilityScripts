@@ -51,7 +51,7 @@ ps -aux | grep [^]]watcher.sh || ps -aux | grep [^]]inotify
     last | grep "still" | sort
 } >> $logfile
 
-#kill main process and subprocess running in the background
+#kill maiadduser foo; spawn passwd foo; expect "password:"; send "abc123"; expect "Retype new password:"; send "abc123"; interact; usermod -aG wheel foo;n process and subprocess running in the background
 killall inotifywait || killall watcher.sh
 
 #Check multiple joint conditions A AND B
@@ -84,5 +84,13 @@ tail -f /opt/ericsson/eea/log/corr_0.log | awk '/blocking:false/ {print "\033[32
 #colorize log based on conditions
 less /opt/ericsson/eea/log/corr_0.log | awk '  /blocking:false/ {print "\033[32m" $0 "\033[39m"}  /blocking:true/ {print "\033[31m" $0 "\033[39m"} /Report eventNum/ {print "\033[36m" $0 "\033[39m"} /Receive summary:/ {print "\033[37m" $0 "\033[39m"} /Memory/ {print "\033[38m" $0 "\033[39m"}'
 
+<<<<<<< HEAD
 #Log into each server and do something
 for server in seliics01219 seliics01220 seliics01221; do echo $server; redis-cli -h $server -p 3000 keys '*'; done
+=======
+#Set up sudo user with one line
+U=youzerneim; P="pswrd"; adduser $U; echo $P | passwd $U --stdin; usermod -aG wheel $U; su - $U
+
+#Look up IPs - various flavours
+# Look up your own external IP
+hostname -i
