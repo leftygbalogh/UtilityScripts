@@ -84,13 +84,29 @@ tail -f /opt/ericsson/eea/log/corr_0.log | awk '/blocking:false/ {print "\033[32
 #colorize log based on conditions
 less /opt/ericsson/eea/log/corr_0.log | awk '  /blocking:false/ {print "\033[32m" $0 "\033[39m"}  /blocking:true/ {print "\033[31m" $0 "\033[39m"} /Report eventNum/ {print "\033[36m" $0 "\033[39m"} /Receive summary:/ {print "\033[37m" $0 "\033[39m"} /Memory/ {print "\033[38m" $0 "\033[39m"}'
 
-<<<<<<< HEAD
 #Log into each server and do something
 for server in seliics01219 seliics01220 seliics01221; do echo $server; redis-cli -h $server -p 3000 keys '*'; done
-=======
+
 #Set up sudo user with one line
 U=youzerneim; P="pswrd"; adduser $U; echo $P | passwd $U --stdin; usermod -aG wheel $U; su - $U
 
 #Look up IPs - various flavours
 # Look up your own external IP
 hostname -i
+ifconfig | grep -v 127. | grep -v inet6 | grep inet
+
+#look up incoming IP of your current SSH connection
+echo $SSH_CONNECTION
+
+#List all incoming connection IPs
+netstat -taepn
+
+#List all network connections with IPs ad ports
+ss -lutan
+
+#Look up IP of remote server by name
+nslookup google.com
+traceroute -I google.com
+
+#check in file if user is authorized, does not allow partial match
+username="ebalgza"; if [[ $(cat /tmp/authorized-users | grep -w $username | cut -d':' -f2) = "authorized" ]]; then echo "yes"; else echo "no"; fi
