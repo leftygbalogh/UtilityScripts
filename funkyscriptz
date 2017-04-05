@@ -112,4 +112,4 @@ traceroute -I google.com
 username="ebalgza"; if [[ $(cat /tmp/authorized-users | grep -w $username | cut -d':' -f2) = "authorized" ]]; then echo "yes"; else echo "no"; fi
 
 #Look up IP of a list of servers
- sed -i '/^$/d' /tmp/serverlistbyname; for server in $(cat /tmp/serverlistbyname); do nslookup $server | grep -v "#" | grep "Address:" | cut -d' ' -f2 |tr -d '\n'; echo ":internal"; done;
+ sed -i '/^$/d' /tmp/serverlistbyname;{ for server in $(cat /tmp/serverlistbyname); do nslookup $server | grep -v "#" | grep "Address:" |  cut -d' ' -f2 | tr -d '\n'; echo ":internal"; done; } > /tmp/network-IPs;  cat /tmp/network-IPs
