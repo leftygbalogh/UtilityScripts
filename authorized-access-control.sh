@@ -4,6 +4,7 @@ export sessionID=$(who am i | cut -d'/' -f2 | cut -d' ' -f1)
 mkdir -p "/var/lib/git-committer/"
 nameFile="/var/lib/git-committer/nameSignumFile$sessionID"
 originatingIP=$(echo $SSH_CONNECTION | cut -d' ' -f1)
+serverPort=$(echo $SSH_CONNECTION | cut -d' ' -f4)
 authorizedusers=/tmp/authorized-users
 
 [ -e "$nameFile" ] || touch "$nameFile"
@@ -40,3 +41,6 @@ authorizedusers=/tmp/authorized-users
 
             fi
     fi
+
+    export "HISTFILE=/var/log/$username-history";
+    export PS1="[\u@\h \w]\$ \[$(tput sgr0)\]";
