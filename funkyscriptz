@@ -87,6 +87,8 @@ less /opt/ericsson/eea/log/corr_0.log | awk '  /blocking:false/ {print "\033[32m
 #Log into each server and do something
 for server in seliics01219 seliics01220 seliics01221; do echo $server; redis-cli -h $server -p 3000 keys '*'; done
 
+
+
 #Set up sudo user with one line
 U=youzerneim; P="pswrd"; adduser $U; echo $P | passwd $U --stdin; usermod -aG wheel $U; su - $U
 
@@ -113,3 +115,13 @@ username="ebalgza"; if [[ $(cat /tmp/authorized-users | grep -w $username | cut 
 
 #Look up IP of a list of servers
  sed -i '/^$/d' /tmp/serverlistbyname;{ for server in $(cat /tmp/serverlistbyname); do nslookup $server | grep -v "#" | grep "Address:" |  cut -d' ' -f2 | tr -d '\n'; echo ":internal"; done; } > /tmp/network-IPs;  cat /tmp/network-IPs
+
+#Remove lines from file that match a case-insensitive string
+sed -i '/HIST*/ Id' /root/.bashrc;
+
+#Change settings in the users .bashrc file
+me=$(who am i | cut -d' ' -f1); sed -i '/HIST*/ Id' /$me/.bashrc; echo "HISTSIZE=5100" >> /$me/.bashrc; echo "HISTFILESIZE=312345" >> /$me/.bashrc; echo "HISTFILE=/var/log/somehistory" >> /$me/.bashrc;
+
+#Set line start in bashrc
+#http://bashrcgenerator.com/
+export PS1="[\u@\h \w]\$ \[$(tput sgr0)\]"
