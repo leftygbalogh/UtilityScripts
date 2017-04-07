@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ originatingServerName=$(nslookup $(echo $SSH_CONNECTION | cut -d' ' -f1) | grep "name = " | cut -d'=' -f2 | xargs | cut -d'.' -f1)
+
+if [[ $(cat /tmp/serverlistbyname | grep -w $originatingServerName | cut -d':' -f2) = "authorized" ]];
+then
+    echo "Internal network access. Allow passthrough.";
+    date;
+    echo "Originating Server Name: $originatingServerName";
+
+fi
