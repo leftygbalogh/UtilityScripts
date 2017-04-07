@@ -45,7 +45,7 @@ fi
 echo authorizedMachine: $authorizedMachine
 
 #Require network external addresses to use an authorized user
-if [[ authorizedMachine = "FALSE" ]];
+if [[ $authorizedMachine == "FALSE" ]];
 then
     echo "Network external address";
     date;
@@ -60,7 +60,7 @@ then
 fi
 
 #Check if user is authorized to access the system.
-if [[ authorizedMachine = "FALSE" ]] && [[ $(cat "$authorizedusers" | grep -i -w $username | cut -d':' -f2) = "authorized" ]];
+if [[ $authorizedMachine = "FALSE" ]] && [[ $(cat "$authorizedusers" | grep -i -w $username | cut -d':' -f2) = "authorized" ]];
 
 then
     authorizedUser="TRUE"
