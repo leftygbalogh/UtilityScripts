@@ -69,7 +69,7 @@ then
 fi
 
 
-if [[ authorizedMachine = "FALSE" ]] && [[ authorizedUser="FALSE" ]];
+if [[ $authorizedMachine = "FALSE" ]] && [[ $authorizedUserc = "FALSE" ]];
 then
     clear;
     echo "We've got a bogie: $username at $(date) from $originatingIP, $originatingServerName." | mail -s "Unauthorized Access attempt at $thisServersIP" -r Zeb@$originatingServerName geza.balogh@ericsson.com ;
