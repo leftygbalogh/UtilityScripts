@@ -87,8 +87,6 @@ less /opt/ericsson/eea/log/corr_0.log | awk '  /blocking:false/ {print "\033[32m
 #Log into each server and do something
 for server in seliics01219 seliics01220 seliics01221; do echo $server; redis-cli -h $server -p 3000 keys '*'; done
 
-
-
 #Set up sudo user with one line
 U=youzerneim; P="pswrd"; adduser $U; echo $P | passwd $U --stdin; usermod -aG wheel $U; su - $U
 
