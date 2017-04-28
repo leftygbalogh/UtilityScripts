@@ -128,3 +128,27 @@ export PS1="[\u@\h \w]\$ \[$(tput sgr0)\]"
 #who is at the other end of the SSH connection
 originatingIP=$(echo $SSH_CONNECTION | cut -d' ' -f1)
 originatingServerName=$(nslookup $(echo $SSH_CONNECTION | cut -d' ' -f1) | grep "name = " | cut -d'=' -f2 | xargs)
+
+#List processes based on keyword
+ps -ef | grep cea
+
+#Find if a package is installed
+rpm -q eea
+
+#list IP tables rule with line numbers
+iptables -L --line-numbers
+
+#Delete ip tables rule by number
+iptables -D INPUT 5
+
+#scp without strick checking
+alias scp='scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+
+#ssh without sctict checking
+alias ssh='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+
+#Remove extension from filenames
+rename -S .html .txt *.html
+
+#Ping a specific port
+IP="10.61.152.69" ; PORT="8102" ; curl -s "$IP:$PORT" > /dev/null && echo "Success connecting to $IP on port $PORT." || echo "Failed to connect to $IP on port $PORT."
