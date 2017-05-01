@@ -20,8 +20,12 @@ iptables -A INPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate NEW
 iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 
 #Allow traffic from specific IPs
+#sekalvdr137
 iptables -A INPUT -s 136.225.208.158 -j ACCEPT
+#sekalx388
 iptables -A INPUT -s 136.225.58.55 -j ACCEPT
+
+#Cluster40
 iptables -A INPUT -s 10.216.186.11 -j ACCEPT
 iptables -A INPUT -s 10.216.186.12 -j ACCEPT
 iptables -A INPUT -s 10.216.186.13 -j ACCEPT
@@ -35,7 +39,11 @@ iptables -A INPUT -s 10.216.186.21 -j ACCEPT
 iptables -A INPUT -s 10.216.186.22 -j ACCEPT
 iptables -A INPUT -s 10.216.186.23 -j ACCEPT
 iptables -A INPUT -s 10.216.186.24 -j ACCEPT
+
+#vmx-eea072
 iptables -A INPUT -s 10.61.172.82 -j ACCEPT
+
+#dl380x3186
 iptables -A INPUT -s 10.61.152.144 -j ACCEPT
 
 iptables -A INPUT -j REJECT
