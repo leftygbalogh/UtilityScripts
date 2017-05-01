@@ -7,7 +7,7 @@ mkdir -p "/var/lib/git-committer/"
 nameFile="/var/lib/git-committer/nameSignumFile$sessionID"
 originatingIP=$(echo $SSH_CONNECTION | cut -d' ' -f1)
 serverPort=$(echo $SSH_CONNECTION | cut -d' ' -f4)
-authorizedusers=/tmp/authorized-users
+authorizedusers="/var/lib/git-committer/authorized-users"
 thisServersIP=$(hostname -i)
 originatingServerName=$(nslookup $(echo $SSH_CONNECTION | cut -d' ' -f1) | grep "name = " | cut -d'=' -f2 | xargs | cut -d'.' -f1)
 authorizedMachine="FALSE"
@@ -26,7 +26,7 @@ echo $authorizedUser authorizedUser
 
 
 #Check if serve name is in authorized list
-if [[ $(cat /tmp/serverlistbyname | grep -w $originatingServerName | cut -d':' -f2) = "authorized" ]];
+if [[ $(cat /var/lib/git-committer/serverlistbyname | grep -w $originatingServerName | cut -d':' -f2) = "authorized" ]];
 then
     echo "Access to server: $originatingServerName granted.";
     date;
@@ -34,7 +34,7 @@ then
 fi
 
 #Allow network internal addresses to access the SUF
-if [[ $(cat /tmp/network-IPs | grep -w $originatingIP | cut -d':' -f2) = "internal" ]];
+if [[ $(cat /var/lib/git-committer/network-IPs | grep -w $originatingIP | cut -d':' -f2) = "internal" ]];
 then
     echo "Internal network access. Allow passthrough.";
     date;
