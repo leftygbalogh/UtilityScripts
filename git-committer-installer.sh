@@ -57,3 +57,12 @@ mkdir -p /etc/opt/git-committer
 chmod +x /var/lib/git-committer/watcher.sh
 
 #start file and add @reboot cronjob
+
+
+
+
+#TODO move all the files into the right folder
+
+#Sanitize files to make sure they are UNIX compliant
+yes | yum install dos2unix
+dos2unix /var/lib/git-committer/*
