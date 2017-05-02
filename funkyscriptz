@@ -152,3 +152,9 @@ rename -S .html .txt *.html
 
 #Ping a specific port
 IP="10.61.152.69" ; PORT="8102" ; curl -s "$IP:$PORT" > /dev/null && echo "Success connecting to $IP on port $PORT." || echo "Failed to connect to $IP on port $PORT."
+
+#Find out if a particular package is available in yum
+yum info policycore* | less
+
+#Find out if a particular python package is available
+pip list | grep "policy*"
