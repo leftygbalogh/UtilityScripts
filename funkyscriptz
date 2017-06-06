@@ -158,3 +158,19 @@ yum info policycore* | less
 
 #Find out if a particular python package is available
 pip list | grep "policy*"
+
+#ssh config
+vim ~/.ssh/config:
+Host *
+  ServerAliveInterval 600
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+  LogLevel=error
+  GSSAPIAuthentication no
+
+# Free space statusfree -g
+free -g
+grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%"}'
+
+#sort files by size
+ls -ltr -S
