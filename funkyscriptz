@@ -134,6 +134,7 @@ ps -ef | grep cea
 
 #Find if a package is installed
 rpm -q eea
+rpm -qa | grep "sqm"
 
 #list IP tables rule with line numbers
 iptables -L --line-numbers
@@ -174,3 +175,13 @@ grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage "%
 
 #sort files by size
 ls -ltr -S
+
+#list largest files
+ du -hs ./*
+
+#last reboot
+last reboot | head -1
+last -x|grep shutdown | head -1
+
+#list contents of a tar file
+tar -ztvf my-data.tar.gz
