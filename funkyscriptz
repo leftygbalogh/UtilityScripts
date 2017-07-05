@@ -142,6 +142,9 @@ iptables -L --line-numbers
 #Delete ip tables rule by number
 iptables -D INPUT 5
 
+#Save IP tables
+service iptables save / restart / stop / status
+
 #scp without strick checking
 alias scp='scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 
@@ -185,3 +188,9 @@ last -x|grep shutdown | head -1
 
 #list contents of a tar file
 tar -ztvf my-data.tar.gz
+
+# Create a screen session with a nameFile
+screen -S foo
+
+#Rename an existing screen session
+CTRL-a :sessionname FOO
