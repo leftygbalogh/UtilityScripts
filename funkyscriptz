@@ -194,3 +194,18 @@ screen -S foo
 
 #Rename an existing screen session
 CTRL-a :sessionname FOO
+
+#Listing all services
+chkconfig --list
+
+#Collect your selected history into a remote file from several sources
+history | grep -v 'ls' | grep -v 'ping' | grep -v 'ssh' | grep -v 'pwd' | ssh root@vmx-eea231 "cat >> /home/ebalgza/Documents/history20170728"
+
+#Crete a list of running processes before and after and list the differences
+#before
+touch /tmp/before-process-list; echo "PROCESSES" > /tmp/before-process-list; ps -eo user,cmd --sort  user| cut -c-120 >> /tmp/before-process-list; echo "SERVICES" >> /tmp/before-process-list; service --status-all >> /tmp/before-process-list; less /tmp/before-process-list
+#after
+clear; echo "hold it"; touch /tmp/after-process-list; echo "PROCESSES" > /tmp/after-process-list; ps -eo user,cmd --sort  user| cut -c-120 >> /tmp/after-process-list; echo "SERVICES" >> /tmp/after-process-list; service --status-all >> /tmp/after-process-list;
+
+#Compare two files and remove the common lines
+awk 'NR==FNR{a[$0]=1;next}!a[$0]' /tmp/after-process-list /tmp/before-process-list | grep -E "sd|oracle"
