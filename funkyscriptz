@@ -209,3 +209,20 @@ clear; echo "hold it"; touch /tmp/after-process-list; echo "PROCESSES" > /tmp/af
 
 #Compare two files and remove the common lines
 awk 'NR==FNR{a[$0]=1;next}!a[$0]' /tmp/after-process-list /tmp/before-process-list | grep -E "sd|oracle"
+
+#Update and start time on CentOS 6.5
+chkconfig | grep ntp; service ntpd status; chkconfig ntpd on; ntpdate 10.64.2.226; service ntpd start;
+
+#figure our why you cant log in as root into a remote console
+less /var/log/secure
+missing pam.limit file
+vim /etc/pam.d/login
+comment out that line that requires it
+
+# Add search param if missing
+if [ `grep -q 'search' /etc/resolv.conf; echo $?` -eq 1 ];then echo "nincs"; `echo 'search ete.ka.sw.ericsson.se' >> /etc/resolv.conf`; fi;
+
+#Turn off firewall on RHEL 6.5
+service iptables save
+service iptables stop
+chkconfig iptables off
